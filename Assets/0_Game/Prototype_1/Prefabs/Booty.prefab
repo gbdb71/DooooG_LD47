@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 2836506905981148532}
   - component: {fileID: 2836506905981148529}
   - component: {fileID: 2836506905981148530}
-  - component: {fileID: 2836506905981148531}
   m_Layer: 0
   m_Name: Leg_Right
   m_TagString: Untagged
@@ -163,20 +162,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2836506905981148531
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2836506905981148533}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2836506906194706710
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +335,6 @@ GameObject:
   - component: {fileID: 2836506906912396958}
   - component: {fileID: 2836506906912396955}
   - component: {fileID: 2836506906912396956}
-  - component: {fileID: 2836506906912396957}
   m_Layer: 0
   m_Name: Leg_Left
   m_TagString: Untagged
@@ -421,20 +405,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2836506906912396957
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2836506906912396959}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2836506907174018148
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +480,7 @@ GameObject:
   - component: {fileID: 2836506907420806045}
   - component: {fileID: 2836506907420806046}
   - component: {fileID: 4045160706862780261}
+  - component: {fileID: 8341115695512644987}
   m_Layer: 0
   m_Name: Booty
   m_TagString: Untagged
@@ -596,3 +567,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07998ab9552b2224eb89e058cdc19f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &8341115695512644987
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836506907420806047}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.50000006
+  m_Center: {x: 0, y: 0, z: 0}

@@ -185,21 +185,21 @@ public class Doggo : MonoBehaviour {
         //for booty
         Ray fr = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        if ( Physics.Raycast( fr, out hit ) ) {
+        if ( Physics.Raycast( fr, out hit, 200f ) ) {
             if ( hit.collider.GetComponent<Booty>() ) {
                 BootySeenSequence();
                 return;
             }
         }
         Ray rr = new Ray( transform.position, transform.right );
-        if ( Physics.Raycast( rr, out hit ) ) {
+        if ( Physics.Raycast( rr, out hit, 200f ) ) {
             if ( hit.collider.GetComponent<Booty>() ) {
                 BootySeenSequence();
                 return;
             }
         }
         Ray lr = new Ray( transform.position, -transform.right );
-        if ( Physics.Raycast( lr, out hit ) ) {
+        if ( Physics.Raycast( lr, out hit, 200f ) ) {
             if ( hit.collider.GetComponent<Booty>() ) {
                 BootySeenSequence();
                 return;
@@ -217,8 +217,8 @@ public class Doggo : MonoBehaviour {
     }
 
     private void MoveEndHandler () {
-        moving = false;
         Raycast();
+        moving = false;
     }
 
     private void BootySeenSequence () {
