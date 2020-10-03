@@ -2727,6 +2727,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2532331190613544960, guid: 75abcf41142bb9a47afb410318b4a74a, type: 3}
+      propertyPath: doggoLength
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2532331190613544961, guid: 75abcf41142bb9a47afb410318b4a74a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

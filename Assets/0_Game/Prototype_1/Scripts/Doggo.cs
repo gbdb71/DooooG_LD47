@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using NaughtyAttributes;
+using System.Collections.Generic;
 
 public class Doggo : MonoBehaviour {
     [Header("References")]
@@ -20,26 +21,16 @@ public class Doggo : MonoBehaviour {
     [SerializeField] private bool moving;
     [ReadOnly]
     [SerializeField] private bool wallForward, wallRight, wallLeft;
+    [ReadOnly]
+    [SerializeField] private bool bootySeen;
 
     private Vector3 input;
     private int currentLength = 0;
-    //private Vector3 camF;
-    //private Vector3 camR;
+    private List<Transform> bodyParts = new List<Transform>();
 
-    private void Update () {
-        //raycast
-        Raycast();
+    private void Start () => Raycast();
 
-        //input
-        ReadInput();
-
-        //camF = cam.forward;
-        //camR = cam.right;
-        //camF.y = 0;
-        //camR.y = 0;
-        //camF.Normalize();
-        //camR.Normalize();
-    }
+    private void Update () => ReadInput();
 
     private void Move ( Direction dir ) {
         if ( currentLength >= doggoLength )
@@ -159,7 +150,7 @@ public class Doggo : MonoBehaviour {
             moving = false;
         }
         else {
-            Instantiate( bodyPrefab, transform.position, Quaternion.identity );
+            bodyParts.Add( Instantiate( bodyPrefab, transform.position, Quaternion.identity ) );
 
             t.SetSpeedBased( true );
             t.SetEase( Ease.OutBack );
@@ -170,7 +161,7 @@ public class Doggo : MonoBehaviour {
     }
 
     private void ReadInput () {
-        if ( moving )
+        if ( moving || bootySeen )
             return;
 
         input = new Vector2( Input.GetAxisRaw( "Horizontal" ), Input.GetAxisRaw( "Vertical" ) ).normalized;
@@ -191,27 +182,50 @@ public class Doggo : MonoBehaviour {
     }
 
     private void Raycast () {
-        //forward
-        Ray r = new Ray(transform.position, transform.forward);
-        wallForward = Physics.Raycast( r, cellSize, wallMask );
+        //for booty
+        Ray fr = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if ( Physics.Raycast( fr, out hit ) ) {
+            if ( hit.collider.GetComponent<Booty>() ) {
+                BootySeenSequence();
+                return;
+            }
+        }
+        Ray rr = new Ray( transform.position, transform.right );
+        if ( Physics.Raycast( rr, out hit ) ) {
+            if ( hit.collider.GetComponent<Booty>() ) {
+                BootySeenSequence();
+                return;
+            }
+        }
+        Ray lr = new Ray( transform.position, -transform.right );
+        if ( Physics.Raycast( lr, out hit ) ) {
+            if ( hit.collider.GetComponent<Booty>() ) {
+                BootySeenSequence();
+                return;
+            }
+        }
 
-        //right
-        r = new Ray( transform.position, transform.right );
-        wallRight = Physics.Raycast( r, cellSize, wallMask );
+        //forward wall
+        wallForward = Physics.Raycast( fr, cellSize, wallMask );
 
-        //left
-        r = new Ray( transform.position, -transform.right );
-        wallLeft = Physics.Raycast( r, cellSize, wallMask );
+        //right wall
+        wallRight = Physics.Raycast( rr, cellSize, wallMask );
+
+        //left wall
+        wallLeft = Physics.Raycast( lr, cellSize, wallMask );
     }
 
-    private void MoveEndHandler () => moving = false;
+    private void MoveEndHandler () {
+        moving = false;
+        Raycast();
+    }
+
+    private void BootySeenSequence () {
+        bootySeen = true;
+
+        //each body part goes to the next body part position
+    }
 
     public enum Direction { up, down, right, left }
-
-    //private void LateUpdate () {
-    //    //Vector3 velocity = ( camF * input.y + camR * input.x ) * speed * Time.deltaTime;
-    //    //transform.position += velocity;
-
-    //    //transform.LookAt( transform.position + velocity );
-    //}
 }
