@@ -7,7 +7,8 @@ public class Doggo : MonoBehaviour {
     public Transform booty;
     [Header("Params")]
     public float cellSize;
-    public float speed;
+    public float moveSpeed;
+    public float rotationTime = .2f;
     public float inputTreshold;
 
     private Vector3 input;
@@ -49,20 +50,20 @@ public class Doggo : MonoBehaviour {
 
         switch ( dir ) {
             case Direction.up:
-            t = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, speed );
-            transform.DOLookAt( transform.position + Vector3.forward, .1f, AxisConstraint.Y );
+            t = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, moveSpeed );
+            transform.DOLookAt( transform.position + Vector3.forward, rotationTime, AxisConstraint.Y );
             break;                                                                               
             case Direction.down:                                                                 
-            t = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, speed );        
-            transform.DOLookAt( transform.position - Vector3.forward, .1f, AxisConstraint.Y );
+            t = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, moveSpeed );        
+            transform.DOLookAt( transform.position - Vector3.forward, rotationTime, AxisConstraint.Y );
             break;
             case Direction.right:
-            t = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, speed );
-            transform.DOLookAt( transform.position + Vector3.right, .1f, AxisConstraint.Y );
+            t = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, moveSpeed );
+            transform.DOLookAt( transform.position + Vector3.right, rotationTime, AxisConstraint.Y );
             break;
             case Direction.left:
-            t = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, speed );
-            transform.DOLookAt( transform.position - Vector3.right, .1f, AxisConstraint.Y );
+            t = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, moveSpeed );
+            transform.DOLookAt( transform.position - Vector3.right, rotationTime, AxisConstraint.Y );
             break;
         }
 
