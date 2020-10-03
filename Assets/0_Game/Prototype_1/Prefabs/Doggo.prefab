@@ -419,11 +419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fec6685dc6c31419f8f71351b3cd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  booty: {fileID: 0}
   bodyPrefab: {fileID: 6982764181892993006, guid: bbc7aefcc07b9494bb04469c5f1609a5, type: 3}
   wallMask:
     serializedVersion: 2
     m_Bits: 512
+  doggoLength: 5
   cellSize: 1
   moveSpeed: 4
   rotationTime: 0.2

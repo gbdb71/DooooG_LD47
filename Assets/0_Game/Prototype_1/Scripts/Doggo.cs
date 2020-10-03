@@ -8,6 +8,7 @@ public class Doggo : MonoBehaviour {
     public Transform bodyPrefab;
     [Header("Params")]
     public LayerMask wallMask;
+    public int doggoLength;
     public float cellSize;
     public float moveSpeed;
     public float rotationTime = .2f;
@@ -21,6 +22,7 @@ public class Doggo : MonoBehaviour {
     [SerializeField] private bool wallForward, wallRight, wallLeft;
 
     private Vector3 input;
+    private int currentLength = 0;
     //private Vector3 camF;
     //private Vector3 camR;
 
@@ -40,6 +42,9 @@ public class Doggo : MonoBehaviour {
     }
 
     private void Move ( Direction dir ) {
+        if ( currentLength >= doggoLength )
+            return;
+
         moving = true;
         Tween t = null;
 
@@ -159,6 +164,8 @@ public class Doggo : MonoBehaviour {
             t.SetSpeedBased( true );
             t.SetEase( Ease.OutBack );
             t.onComplete += MoveEndHandler;
+
+            currentLength++;
         }
     }
 
