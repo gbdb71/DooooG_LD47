@@ -51,7 +51,8 @@ public class GridEditor : SerializedMonoBehaviour
     public Transform WallsFather;
 
 
-    [Button("Regenerates the Cells", ButtonSizes.Large), ShowIf("ShowButtons"), GUIColor(0.7f, 1f, 0.7f, 1f)]
+	#region BUTTONS
+	[Button("Regenerates the Cells", ButtonSizes.Gigantic), ShowIf("ShowButtons"), GUIColor(0.7f, 1f, 0.7f, 1f), PropertySpace(20)]
     public void CreateGrid()
     {
         ImmediateDestroyChilds(CellsFather);
@@ -99,18 +100,17 @@ public class GridEditor : SerializedMonoBehaviour
 
     }
 
-
-    [Button("Reset Custom Grid", ButtonSizes.Large), ShowIf("useCustomGrid"), GUIColor(1f, 0.7f, 0.7f, 1f)]
+    [Button("Reset Custom Grid", ButtonSizes.Gigantic), ShowIf("useCustomGrid"), GUIColor(1f, 0.7f, 0.7f, 1f), PropertySpace(30)]
     public void ResetCustomGrid()
     {
         bool userChoice = true;
         if (CustomCellDrawing != null)
         {
-            userChoice = EditorUtility.DisplayDialog("Custom Grid Reset", 
+            userChoice = EditorUtility.DisplayDialog("Custom Grid Reset",
                                                      "Hei, attento, guarda che se hai fatto delle modifiche alla CustomGrid cosi vengono perse, sei sicuro di voler proseguire?",
                                                      "Ma certo!", "Oh cazzo...");
         }
-        if(userChoice)
+        if (userChoice)
         {
             CustomCellDrawing = new CellType[gridSizeX, gridSizeZ];
             ImmediateDestroyChilds(CellsFather);
@@ -118,7 +118,23 @@ public class GridEditor : SerializedMonoBehaviour
         }
     }
 
-    public void ImmediateDestroyChilds(Transform target)
+    [FoldoutGroup("Extra Functions"), Button("Fill Grid With Flat Cells", ButtonSizes.Large), ShowIf("ShowFillGridWithBlankCells"), GUIColor(0.7f, 0.7f, 1f, 1f)]
+    public void FillGridWithBlankCells()
+    {
+        for (int y = 0; y < CustomCellDrawing.GetLength(0); y++)
+        {
+            for (int x = 0; x < CustomCellDrawing.GetLength(1); x++)
+            {
+                CustomCellDrawing[y, x] = CellType.None_None;
+            }
+        }
+    }
+
+    #endregion
+
+
+    #region INTERNAL
+    private void ImmediateDestroyChilds(Transform target)
     {
         while(target.transform.childCount  > 0)
         {
@@ -159,9 +175,11 @@ public class GridEditor : SerializedMonoBehaviour
         tmp.name = "WallUp [ " + x + " , " + y + " ]";
     }
 
+	#endregion
 
-    #region EDITOR GUI
-    private static CellType DrawColoredEnumElement(Rect rect, CellType value)
+
+	#region EDITOR GUI
+	private static CellType DrawColoredEnumElement(Rect rect, CellType value)
     {
         if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
         {
@@ -219,10 +237,15 @@ public class GridEditor : SerializedMonoBehaviour
             CustomCellDrawing = new CellType[gridSizeX, gridSizeZ];
         return !useCustomGrid || (gridSizeX == CustomCellDrawing.GetLength(0) && gridSizeZ == CustomCellDrawing.GetLength(1));
 	}
-	#endregion
+
+    private bool ShowFillGridWithBlankCells()
+    {
+        return useCustomGrid && ShowButtons();
+    }
+    #endregion
 
 
-	public enum CellType
+    public enum CellType
     {
         Empty = 0,
         None_None = 1,
