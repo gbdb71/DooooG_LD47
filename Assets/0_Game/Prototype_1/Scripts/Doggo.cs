@@ -9,8 +9,8 @@ public class Doggo : MonoBehaviour {
     [Header("References")]
     public Transform booty;
     public Transform bodyPrefab;
-    public Transform pathHolder;
-    public PathCreator pathCreator;
+    public ProceduralDogBody proceduralDogBody;
+    public Material dogBodyMaterial;
     [Header("Params")]
     public LayerMask wallMask;
     [Min(2)]
@@ -34,6 +34,7 @@ public class Doggo : MonoBehaviour {
     [ReadOnly]
     [SerializeField] private bool bootyForward, bootyRight, bootyLeft;
 
+    private GameObject pathHolder;
     private Vector3 input;
     private List<Transform> bodyParts = new List<Transform>();
     [SerializeField]
@@ -44,9 +45,9 @@ public class Doggo : MonoBehaviour {
     private Vector3[] points;
 
     private void Start () {
-        CreateBody();
+        CreatePathHolder();
 
-        CreatePath();
+        CreateBody();
 
         Raycast();
     }
@@ -58,35 +59,19 @@ public class Doggo : MonoBehaviour {
             UpdatePath();
     }
 
-    private void CreatePath () {
-        int count = bodyParts.Count;
-        points = new Vector3[count + 2];
+    private void CreatePathHolder () {
+        pathHolder = new GameObject( "Path Holder" );
+        pathHolder.transform.SetPositionAndRotation( Vector3.zero, Quaternion.identity );
 
-        points[0] = transform.position;
-
-        for ( int i = 1; i < count - 1; i++ ) {
-            points[i] = bodyParts[i - 1].position;
-        }
-
-        points[points.Length - 1] = booty.position;
-
-        bezierPath = new BezierPath( points, false, PathSpace.xyz );
-        vertexPath = new VertexPath( bezierPath, pathHolder );
-
-        OnPathUpdate.Invoke( vertexPath );
+        proceduralDogBody.meshFilter = pathHolder.AddComponent<MeshFilter>();
+        pathHolder.AddComponent<MeshRenderer>().material = dogBodyMaterial;
     }
 
     private void UpdatePath () {
-        points[0] = transform.position;
+        points = new Vector3[doggoLength];
 
-        for ( int i = 1; i < points.Length - 1; i++ ) {
-            points[i] = bodyParts[i - 1].position;
-        }
-
-        points[points.Length - 1] = booty.position;
-
-        bezierPath = new BezierPath( points, false, PathSpace.xyz );
-        vertexPath = new VertexPath( bezierPath, pathHolder );
+        bezierPath = new BezierPath( bodyParts, false, PathSpace.xyz );
+        vertexPath = new VertexPath( bezierPath, pathHolder.transform );
 
         OnPathUpdate.Invoke( vertexPath );
     }
@@ -218,22 +203,19 @@ public class Doggo : MonoBehaviour {
     }
 
     private void UpdateBody () {
-        Transform currentBP = bodyParts[0];
+        Transform currentBP = bodyParts[1];
         Transform previousBP;
 
         currentBP.DOMove( transform.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase );
         currentBP.DORotateQuaternion( transform.rotation, rotationTime ).SetEase( rotationEase );
 
-        for ( int i = 1; i < doggoLength - 2; i++ ) {
+        for ( int i = 2; i < doggoLength; i++ ) {
             currentBP = bodyParts[i];
             previousBP = bodyParts[i - 1];
 
             currentBP.DOMove( previousBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase );
             currentBP.DORotateQuaternion( previousBP.rotation, rotationTime ).SetEase( rotationEase );
         }
-
-        booty.DOMove( currentBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase );
-        booty.DORotateQuaternion( currentBP.rotation, rotationTime ).SetEase( rotationEase );
     }
 
     private void ReadInput () {
@@ -359,9 +341,11 @@ public class Doggo : MonoBehaviour {
     }
 
     private void CreateBody () {
+        bodyParts.Add( transform );
         for ( int i = 0; i < doggoLength - 2; i++ ) {
             bodyParts.Add( Instantiate( bodyPrefab, transform.position, transform.rotation ) );
         }
+        bodyParts.Add( booty );
     }
 
     public enum Direction {

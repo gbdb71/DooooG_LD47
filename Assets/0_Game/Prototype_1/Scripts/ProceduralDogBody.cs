@@ -27,14 +27,13 @@ public class ProceduralDogBody : MonoBehaviour {
         Vector3[] normals = new Vector3[verts.Length];
 
         float angleRad = Mathf.PI * 2 / detail;
-        Vector3 forward = Vector3.zero;
+        Vector3 forward;
 
         #region All Segments Minus Last One
-        for ( int i = 0; i < vertexPath.NumPoints - 1; i++ ) {
+        for ( int i = 0; i < vertexPath.NumPoints; i++ ) {
             Vector3 p = vertexPath.GetPoint( i );
-            Vector3 nextP = vertexPath.GetPoint( i + 1 );
 
-            forward = (nextP - p).normalized;
+            forward = vertexPath.GetTangent( i );
 
             for ( int j = 0; j < detail; j++ ) {
                 Vector3 localOffset = new Vector3( Mathf.Cos( angleRad * j ), Mathf.Sin( angleRad * j ), 0 ) * radius;
@@ -46,17 +45,17 @@ public class ProceduralDogBody : MonoBehaviour {
         }
         #endregion
 
-        #region Last Segment
-        Vector3 point = vertexPath.GetPoint( vertexPath.NumPoints - 1 );
+        //#region Last Segment
+        //Vector3 lastPoint = vertexPath.GetPoint( vertexPath.NumPoints - 1 );
 
-        for ( int j = 0; j < detail; j++ ) {
-            Vector3 localOffset = new Vector3( Mathf.Cos( angleRad * j ), Mathf.Sin( angleRad * j ), 0 ) * radius;
-            Vector3 pos = point + Quaternion.LookRotation(forward) * localOffset;
+        //for ( int j = 0; j < detail; j++ ) {
+        //    Vector3 localOffset = new Vector3( Mathf.Cos( angleRad * j ), Mathf.Sin( angleRad * j ), 0 ) * radius;
+        //    Vector3 pos = lastPoint + Quaternion.LookRotation(forward) * localOffset;
 
-            verts[( vertexPath.NumPoints - 1 ) * detail + j] = pos;
-            normals[( vertexPath.NumPoints - 1 ) * detail + j] = ( pos - point ).normalized;
-        }
-        #endregion
+        //    verts[( vertexPath.NumPoints - 1 ) * detail + j] = pos;
+        //    normals[( vertexPath.NumPoints - 1 ) * detail + j] = ( pos - lastPoint ).normalized;
+        //}
+        //#endregion
 
         #region Tris
         for ( int i = 0; i < vertexPath.NumPoints - 1; i++ ) {
@@ -92,8 +91,13 @@ public class ProceduralDogBody : MonoBehaviour {
         meshFilter.mesh = mesh;
     }
 
-    public void SetVertexPath(VertexPath vp ) {
+    public void SetVertexPath ( VertexPath vp ) {
         this.vertexPath = vp;
+        GenerateMesh();
+    }
+
+    public void TestWithPathCreator ( PathCreator pathCreator ) {
+        vertexPath = pathCreator.path;
         GenerateMesh();
     }
 }

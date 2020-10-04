@@ -406,6 +406,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   booty: {fileID: 0}
   bodyPrefab: {fileID: 6982764181892993006, guid: bbc7aefcc07b9494bb04469c5f1609a5, type: 3}
+  proceduralDogBody: {fileID: 0}
+  dogBodyMaterial: {fileID: 2100000, guid: 0bc5efee4e9beb742bb777f2a353519a, type: 2}
   wallMask:
     serializedVersion: 2
     m_Bits: 512
@@ -418,6 +420,20 @@ MonoBehaviour:
   rotationEase: 6
   OnWin:
     _PersistentCalls: []
+  OnPathUpdate:
+    _PersistentCalls:
+    - _Target: {fileID: 0}
+      _MethodName: SetVertexPath
+      _PersistentArguments:
+      - _Type: 14
+        _Int: 0
+        _String: PathCreation.VertexPath, PathCreator, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+        _X: 0
+        _Y: 0
+        _Z: 0
+        _W: 0
+        _Object: {fileID: 0}
   currentDirection: 0
   moving: 0
   wallForward: 0
