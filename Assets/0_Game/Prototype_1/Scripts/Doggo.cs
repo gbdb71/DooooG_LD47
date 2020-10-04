@@ -3,11 +3,14 @@ using DG.Tweening;
 using NaughtyAttributes;
 using System.Collections.Generic;
 using UltEvents;
+using PathCreation;
 
 public class Doggo : MonoBehaviour {
     [Header("References")]
     public Transform booty;
     public Transform bodyPrefab;
+    public Transform pathHolder;
+    public PathCreator pathCreator;
     [Header("Params")]
     public LayerMask wallMask;
     [Min(2)]
@@ -20,6 +23,7 @@ public class Doggo : MonoBehaviour {
     public Ease rotationEase;
     [Header("Events")]
     public UltEvent OnWin;
+    public UltEvent<VertexPath> OnPathUpdate;
 
     [Space, Space]
     public Direction currentDirection;
@@ -32,16 +36,60 @@ public class Doggo : MonoBehaviour {
 
     private Vector3 input;
     private List<Transform> bodyParts = new List<Transform>();
-    [SerializeField][ReadOnly]
+    [SerializeField]
+    [ReadOnly]
     private int bootyFollowMoves = 0;
+    private VertexPath vertexPath;
+    private BezierPath bezierPath;
+    private Vector3[] points;
 
     private void Start () {
         CreateBody();
 
+        CreatePath();
+
         Raycast();
     }
 
-    private void Update () => ReadInput();
+    private void Update () {
+        ReadInput();
+
+        if ( moving )
+            UpdatePath();
+    }
+
+    private void CreatePath () {
+        int count = bodyParts.Count;
+        points = new Vector3[count + 2];
+
+        points[0] = transform.position;
+
+        for ( int i = 1; i < count - 1; i++ ) {
+            points[i] = bodyParts[i - 1].position;
+        }
+
+        points[points.Length - 1] = booty.position;
+
+        bezierPath = new BezierPath( points, false, PathSpace.xyz );
+        vertexPath = new VertexPath( bezierPath, pathHolder );
+
+        OnPathUpdate.Invoke( vertexPath );
+    }
+
+    private void UpdatePath () {
+        points[0] = transform.position;
+
+        for ( int i = 1; i < points.Length - 1; i++ ) {
+            points[i] = bodyParts[i - 1].position;
+        }
+
+        points[points.Length - 1] = booty.position;
+
+        bezierPath = new BezierPath( points, false, PathSpace.xyz );
+        vertexPath = new VertexPath( bezierPath, pathHolder );
+
+        OnPathUpdate.Invoke( vertexPath );
+    }
 
     private void Move ( Direction dir ) {
         moving = true;
@@ -316,12 +364,11 @@ public class Doggo : MonoBehaviour {
         }
     }
 
-    public enum Direction 
-    { 
+    public enum Direction {
         NONE = 0,
         up = 1,
         right = 2,
-        down = 3, 
+        down = 3,
         left = 4
     }
 }
