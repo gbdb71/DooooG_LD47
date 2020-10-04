@@ -8,10 +8,12 @@ using static Doggo;
 public class DogEditor : SerializedMonoBehaviour
 {
     [SerializeField, ReadOnly] private Doggo _dogPointer;
+    [SerializeField] private Transform _booty;
     [SerializeField, ReadOnly] private Direction _dogDirection;
     [SerializeField, ReadOnly] private int _lenght;
 
-    public Doggo dog 
+
+    public Doggo Dog 
     {
         get 
         {
@@ -22,7 +24,7 @@ public class DogEditor : SerializedMonoBehaviour
 	}
 
     [ShowInInspector]
-    public Direction dogDirection
+    public Direction DogDirection
     {
         get
         {
@@ -31,24 +33,28 @@ public class DogEditor : SerializedMonoBehaviour
         set
         {
             _dogDirection = value;
-            dog.currentDirection = value;
+            Dog.currentDirection = value;
 			switch (value)
 			{
                 case Direction.up:
-                    dog.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    Dog.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    _booty.rotation = Quaternion.Euler(0, 0, 0);
                     break;
 				case Direction.right:
-                    dog.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    Dog.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    _booty.rotation = Quaternion.Euler(0, 90, 0);
                     break;
                 case Direction.down:
-                    dog.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    Dog.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    _booty.rotation = Quaternion.Euler(0, 180, 0);
                     break;
                 case Direction.left:
-                    dog.transform.rotation = Quaternion.Euler(0, 270, 0);
+                    Dog.transform.rotation = Quaternion.Euler(0, 270, 0);
+                    _booty.rotation = Quaternion.Euler(0, 270, 0);
                     break;
 			}
-		}
-	}
+        }
+    }
 
 
     [MinValue(4), ShowInInspector]
@@ -61,9 +67,14 @@ public class DogEditor : SerializedMonoBehaviour
         set
         {
             _lenght = value;
-            dog.doggoLength = value;
+            Dog.doggoLength = value;
 		}
 	}
 
+	public void Awake()
+	{
+        Lenght = _lenght;
+        DogDirection = _dogDirection;
+    }
 
 }
