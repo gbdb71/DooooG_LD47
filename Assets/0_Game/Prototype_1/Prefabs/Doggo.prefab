@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6474516379843561737}
   - component: {fileID: 539202438545053404}
   - component: {fileID: 6485568492122561062}
-  - component: {fileID: 2432384945442833834}
   m_Layer: 0
   m_Name: Leg_Right
   m_TagString: Untagged
@@ -82,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2432384945442833834
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207888144914731241}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &660696916195896901
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +418,7 @@ MonoBehaviour:
   wallForward: 0
   wallRight: 0
   wallLeft: 0
+  bootySeen: 0
 --- !u!1 &2532331191578990104
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +597,6 @@ GameObject:
   - component: {fileID: 8593164857554968035}
   - component: {fileID: 1328033039083451460}
   - component: {fileID: 3989167754860711421}
-  - component: {fileID: 7142388794536291319}
   m_Layer: 0
   m_Name: Leg_Left
   m_TagString: Untagged
@@ -682,20 +667,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7142388794536291319
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931454661548130458}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3792646321041446666
 GameObject:
   m_ObjectHideFlags: 0

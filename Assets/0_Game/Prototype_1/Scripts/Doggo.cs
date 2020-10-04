@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Doggo : MonoBehaviour {
     [Header("References")]
-    //public Transform cam;
+    public Transform booty;
     public Transform bodyPrefab;
     [Header("Params")]
     public LayerMask wallMask;
@@ -15,7 +15,6 @@ public class Doggo : MonoBehaviour {
     public float rotationTime = .2f;
     public float inputTreshold;
 
-    [ReadOnly]
     [SerializeField] private Direction currentDirection;
     [ReadOnly]
     [SerializeField] private bool moving;
@@ -25,17 +24,17 @@ public class Doggo : MonoBehaviour {
     [SerializeField] private bool bootySeen;
 
     private Vector3 input;
-    private int currentLength = 0;
     private List<Transform> bodyParts = new List<Transform>();
 
-    private void Start () => Raycast();
+    private void Start () {
+        CreateBody();
+
+        Raycast();
+    }
 
     private void Update () => ReadInput();
 
     private void Move ( Direction dir ) {
-        if ( currentLength >= doggoLength )
-            return;
-
         moving = true;
         Tween t = null;
 
@@ -150,14 +149,31 @@ public class Doggo : MonoBehaviour {
             moving = false;
         }
         else {
-            bodyParts.Add( Instantiate( bodyPrefab, transform.position, Quaternion.identity ) );
-
             t.SetSpeedBased( true );
             t.SetEase( Ease.OutBack );
             t.onComplete += MoveEndHandler;
 
-            currentLength++;
+            UpdateBody();
         }
+    }
+
+    private void UpdateBody () {
+        Transform currentBP = bodyParts[0];
+        Transform previousBP;
+
+        currentBP.DOMove( transform.position, moveSpeed ).SetSpeedBased( true ).SetEase(Ease.OutBack);
+        currentBP.DORotateQuaternion( transform.rotation, rotationTime );
+
+        for ( int i = 1; i < doggoLength; i++ ) {
+            currentBP = bodyParts[i];
+            previousBP = bodyParts[i - 1];
+
+            currentBP.DOMove( previousBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( Ease.OutBack );
+            currentBP.DORotateQuaternion( previousBP.rotation, rotationTime );
+        }
+
+        booty.DOMove( currentBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( Ease.OutBack );
+        booty.DORotateQuaternion( currentBP.rotation, rotationTime );
     }
 
     private void ReadInput () {
@@ -185,22 +201,23 @@ public class Doggo : MonoBehaviour {
         //for booty
         Ray fr = new Ray(transform.position, transform.forward);
         RaycastHit hit;
+
         if ( Physics.Raycast( fr, out hit, 200f ) ) {
-            if ( hit.collider.GetComponent<Booty>() ) {
+            if ( hit.collider.transform == booty ) {
                 BootySeenSequence();
                 return;
             }
         }
         Ray rr = new Ray( transform.position, transform.right );
         if ( Physics.Raycast( rr, out hit, 200f ) ) {
-            if ( hit.collider.GetComponent<Booty>() ) {
+            if ( hit.collider.transform == booty ) {
                 BootySeenSequence();
                 return;
             }
         }
         Ray lr = new Ray( transform.position, -transform.right );
         if ( Physics.Raycast( lr, out hit, 200f ) ) {
-            if ( hit.collider.GetComponent<Booty>() ) {
+            if ( hit.collider.transform == booty ) {
                 BootySeenSequence();
                 return;
             }
@@ -217,14 +234,20 @@ public class Doggo : MonoBehaviour {
     }
 
     private void MoveEndHandler () {
-        Raycast();
         moving = false;
+        Raycast();
     }
 
     private void BootySeenSequence () {
         bootySeen = true;
 
         //each body part goes to the next body part position
+    }
+
+    private void CreateBody () {
+        for ( int i = 0; i < doggoLength; i++ ) {
+            bodyParts.Add( Instantiate( bodyPrefab, transform.position, transform.rotation ) );
+        }
     }
 
     public enum Direction { up, down, right, left }
