@@ -2733,14 +2733,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2532331190613544960, guid: 75abcf41142bb9a47afb410318b4a74a, type: 3}
-      propertyPath: doggoLength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2532331190613544960, guid: 75abcf41142bb9a47afb410318b4a74a, type: 3}
-      propertyPath: currentDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2532331190613544960, guid: 75abcf41142bb9a47afb410318b4a74a, type: 3}
       propertyPath: booty
       value: 
       objectReference: {fileID: 940376913}

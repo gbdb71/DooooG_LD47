@@ -404,21 +404,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fec6685dc6c31419f8f71351b3cd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  booty: {fileID: 0}
   bodyPrefab: {fileID: 6982764181892993006, guid: bbc7aefcc07b9494bb04469c5f1609a5, type: 3}
   wallMask:
     serializedVersion: 2
     m_Bits: 512
-  doggoLength: 5
+  doggoLength: 4
   cellSize: 1
   moveSpeed: 4
   rotationTime: 0.2
   inputTreshold: 0.7
-  currentDirection: 0
+  movementEase: 9
+  rotationEase: 6
+  OnWin:
+    _PersistentCalls: []
+  currentDirection: 1
   moving: 0
   wallForward: 0
   wallRight: 0
   wallLeft: 0
-  bootySeen: 0
+  bootyForward: 0
+  bootyRight: 0
+  bootyLeft: 0
+  bootyFollowMoves: 0
 --- !u!1 &2532331191578990104
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 2532331191578990104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.62757, y: 0.5618042, z: 0.62757}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 7515529888506395370}
   - {fileID: 2571635638955595478}
