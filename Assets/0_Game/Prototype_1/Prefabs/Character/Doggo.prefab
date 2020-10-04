@@ -418,7 +418,7 @@ MonoBehaviour:
   rotationEase: 6
   OnWin:
     _PersistentCalls: []
-  currentDirection: 1
+  currentDirection: 0
   moving: 0
   wallForward: 0
   wallRight: 0

@@ -22,7 +22,7 @@ public class Doggo : MonoBehaviour {
     public UltEvent OnWin;
 
     [Space, Space]
-    [SerializeField] private Direction currentDirection;
+    public Direction currentDirection;
     [ReadOnly]
     [SerializeField] private bool moving;
     [ReadOnly]
@@ -316,5 +316,12 @@ public class Doggo : MonoBehaviour {
         }
     }
 
-    public enum Direction { up, down, right, left }
+    public enum Direction 
+    { 
+        NONE = 0,
+        up = 1,
+        right = 2,
+        down = 3, 
+        left = 4
+    }
 }
