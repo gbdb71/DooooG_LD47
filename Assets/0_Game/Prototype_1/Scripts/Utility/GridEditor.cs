@@ -38,25 +38,28 @@ public class GridEditor : SerializedMonoBehaviour
     public bool resetPosition = true;
     
 
-    [FoldoutGroup("References")]
-    [AssetList]
+    [FoldoutGroup("References"), AssetList]
     public GameObject cellPrefab;
-    [FoldoutGroup("References"), Space]
-    [AssetList]
+    [FoldoutGroup("References"), AssetList, Space]
     public GameObject wallPrefab;
+    [FoldoutGroup("References"), AssetList, Space]
+    public GameObject wallInvisiblePrefab;
 
     [FoldoutGroup("Internal Ref"), ChildGameObjectsOnly(IncludeSelf = false)]
     public Transform CellsFather;
     [FoldoutGroup("Internal Ref"), ChildGameObjectsOnly(IncludeSelf = false), Space]
     public Transform WallsFather;
+    [FoldoutGroup("Internal Ref"), ChildGameObjectsOnly(IncludeSelf = false), Space]
+    public Transform MapBorderFather;
 
 
-	#region BUTTONS
-	[Button("Regenerates the Cells", ButtonSizes.Gigantic), ShowIf("ShowButtons"), GUIColor(0.7f, 1f, 0.7f, 1f), PropertySpace(20)]
+    #region BUTTONS
+    [Button("Regenerates the Cells", ButtonSizes.Gigantic), ShowIf("ShowButtons"), GUIColor(0.7f, 1f, 0.7f, 1f), PropertySpace(20)]
     public void CreateGrid()
     {
         ImmediateDestroyChilds(CellsFather);
         ImmediateDestroyChilds(WallsFather);
+        ImmediateDestroyChilds(MapBorderFather);
 
 
         if (getCellSizeFromPrefabScale)
@@ -79,14 +82,20 @@ public class GridEditor : SerializedMonoBehaviour
                     if(CustomCellDrawing[x, gridSizeZ - y - 1] != CellType.Empty)
                     {
                         InstantiateCell(x, y);
+                    } 
+                    else 
+                    {
+                        InstantiateInvisibleWall(x, y);
                     }
+
                     if(CustomCellDrawing[x, gridSizeZ - y - 1] == CellType.Left_None || 
                        CustomCellDrawing[x, gridSizeZ - y - 1] == CellType.Left_Up)
                     {
                         InstantiateWallLeft(x, y);
 					}
-                    if(CustomCellDrawing[x, gridSizeZ - y - 1] == CellType.None_Up ||
-                       CustomCellDrawing[x, gridSizeZ - y - 1] == CellType.Left_Up)
+
+                    if(CustomCellDrawing[x, gridSizeZ - y-1] == CellType.None_Up ||
+                       CustomCellDrawing[x, gridSizeZ - y-1] == CellType.Left_Up)
                     {
                         InstantiateWallUp(x, y);
                     }
@@ -97,7 +106,8 @@ public class GridEditor : SerializedMonoBehaviour
                 }
 			}
 		}
-
+        
+        InstantiateMapBorder();
     }
 
     [Button("Reset Custom Grid", ButtonSizes.Gigantic), ShowIf("useCustomGrid"), GUIColor(1f, 0.7f, 0.7f, 1f), PropertySpace(30)]
@@ -115,6 +125,7 @@ public class GridEditor : SerializedMonoBehaviour
             CustomCellDrawing = new CellType[gridSizeX, gridSizeZ];
             ImmediateDestroyChilds(CellsFather);
             ImmediateDestroyChilds(WallsFather);
+            ImmediateDestroyChilds(MapBorderFather);
         }
     }
 
@@ -173,6 +184,60 @@ public class GridEditor : SerializedMonoBehaviour
         tmp.transform.localRotation = Quaternion.Euler(0, 0, 0);
         tmp.transform.parent = WallsFather.transform;
         tmp.name = "WallUp [ " + x + " , " + y + " ]";
+    }
+
+    private void InstantiateInvisibleWall(int x, int y)
+    {
+        GameObject tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+        tmp.transform.localPosition = new Vector3((cellSize * (x - gridSizeX / 2)) + extraSpaceBetweenCells * x,
+                                                  1,
+                                                  (cellSize * (y - gridSizeZ / 2)) + extraSpaceBetweenCells * y);
+        tmp.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        tmp.transform.parent = MapBorderFather.transform;
+        tmp.name = "BorderInternal [ " + x + " , " + y + " ]";
+    }
+
+    private void InstantiateMapBorder()
+    {
+        GameObject tmp;
+        for (int i = 0; i < gridSizeZ; i++)
+        {
+            //DOWN
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize/2 - extraSpaceBetweenCells,
+                                          1,
+                                          cellSize * (- gridSizeZ / 2) - cellSize);
+            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderDown [ " + i + " ]";
+
+            //UP
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize / 2 - extraSpaceBetweenCells,
+                                          1,
+                                          cellSize * (gridSizeZ / 2));
+            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderUp [ " + i + " ]";
+
+            //LEFT
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (-gridSizeX / 2)) + (cellSize + extraSpaceBetweenCells) / 2 - cellSize - extraSpaceBetweenCells - cellSize / 2,
+                                                      1,
+                                                      (cellSize * (i - gridSizeZ / 2)) + extraSpaceBetweenCells * i);
+            tmp.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderLeft [ " + i + " ]";
+
+            //RIGHT
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (gridSizeX / 2)) + (cellSize + extraSpaceBetweenCells) / 2 - extraSpaceBetweenCells - cellSize / 2,
+                                                      1,
+                                                      (cellSize * (i - gridSizeZ / 2)) + extraSpaceBetweenCells * i);
+            tmp.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderRight [ " + i + " ]";
+        }
     }
 
 	#endregion
