@@ -202,24 +202,6 @@ public class GridEditor : SerializedMonoBehaviour
         GameObject tmp;
         for (int i = 0; i < gridSizeZ; i++)
         {
-            //DOWN
-            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
-            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize/2 - extraSpaceBetweenCells,
-                                          1,
-                                          cellSize * (- gridSizeZ / 2) - cellSize);
-            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            tmp.transform.parent = MapBorderFather.transform;
-            tmp.name = "BorderDown [ " + i + " ]";
-
-            //UP
-            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
-            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize / 2 - extraSpaceBetweenCells,
-                                          1,
-                                          cellSize * (gridSizeZ / 2));
-            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            tmp.transform.parent = MapBorderFather.transform;
-            tmp.name = "BorderUp [ " + i + " ]";
-
             //LEFT
             tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
             tmp.transform.localPosition = new Vector3((cellSize * (-gridSizeX / 2)) + (cellSize + extraSpaceBetweenCells) / 2 - cellSize - extraSpaceBetweenCells - cellSize / 2,
@@ -231,12 +213,34 @@ public class GridEditor : SerializedMonoBehaviour
 
             //RIGHT
             tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
-            tmp.transform.localPosition = new Vector3((cellSize * (gridSizeX / 2)) + (cellSize + extraSpaceBetweenCells) / 2 - extraSpaceBetweenCells - cellSize / 2,
+            tmp.transform.localPosition = new Vector3((cellSize * Mathf.CeilToInt((float)gridSizeX / 2)) + (cellSize + extraSpaceBetweenCells) / 2 - extraSpaceBetweenCells - cellSize / 2,
                                                       1,
                                                       (cellSize * (i - gridSizeZ / 2)) + extraSpaceBetweenCells * i);
             tmp.transform.localRotation = Quaternion.Euler(0, 0, 0);
             tmp.transform.parent = MapBorderFather.transform;
             tmp.name = "BorderRight [ " + i + " ]";
+        }
+
+        for(int i = 0; i < gridSizeX; i++)
+        {
+            //DOWN
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize / 2 - extraSpaceBetweenCells,
+                                          1,
+                                          cellSize * (-gridSizeZ / 2) - cellSize);
+            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderDown [ " + i + " ]";
+
+            //UP
+            tmp = (GameObject)PrefabUtility.InstantiatePrefab(wallInvisiblePrefab);
+            tmp.transform.localPosition = new Vector3((cellSize * (i - gridSizeX / 2)) + extraSpaceBetweenCells * i + (cellSize + extraSpaceBetweenCells) / 2 - cellSize / 2 - extraSpaceBetweenCells,
+                                          1,
+                                          cellSize * Mathf.CeilToInt((float)gridSizeZ / 2));
+            tmp.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            tmp.transform.parent = MapBorderFather.transform;
+            tmp.name = "BorderUp [ " + i + " ]";
+
         }
     }
 

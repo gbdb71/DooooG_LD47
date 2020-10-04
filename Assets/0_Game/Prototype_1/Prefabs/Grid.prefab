@@ -691,7 +691,7 @@ MonoBehaviour:
   useCustomGrid: 0
   gridSizeX: 1
   gridSizeZ: 1
-  wallPositionY: 0.3
+  wallPositionY: 1
   extraSpaceBetweenCells: 0
   getCellSizeFromPrefabScale: 1
   cellSize: 1

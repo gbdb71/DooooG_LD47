@@ -9,5 +9,10 @@
         public void LoadScene ( int buildIndex ) {
             SceneManager.LoadScene( buildIndex );
         }
+
+        public void ReloadScene ()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
