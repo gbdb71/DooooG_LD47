@@ -7,7 +7,10 @@ using static Doggo;
 
 public class DogEditor : SerializedMonoBehaviour
 {
-    private Doggo _dogPointer;
+    [SerializeField, ReadOnly] private Doggo _dogPointer;
+    [SerializeField, ReadOnly] private Direction _dogDirection;
+    [SerializeField, ReadOnly] private int _lenght;
+
     public Doggo dog 
     {
         get 
@@ -23,10 +26,11 @@ public class DogEditor : SerializedMonoBehaviour
     {
         get
         {
-            return dog.currentDirection;
+            return _dogDirection;
         }
         set
         {
+            _dogDirection = value;
             dog.currentDirection = value;
 			switch (value)
 			{
@@ -52,10 +56,11 @@ public class DogEditor : SerializedMonoBehaviour
     {
         get 
         {
-            return dog.doggoLength;
+            return _lenght;
 		}
         set
         {
+            _lenght = value;
             dog.doggoLength = value;
 		}
 	}
