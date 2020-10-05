@@ -110,10 +110,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2749271628585810865, guid: e2d78c1f6aebca54b901c1f8b8b9559e, type: 3}
-      propertyPath: meshFilter
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3545324735700382923, guid: e2d78c1f6aebca54b901c1f8b8b9559e, type: 3}
       propertyPath: m_Name
       value: Dog Body

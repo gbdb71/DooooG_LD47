@@ -78,7 +78,7 @@ public class Doggo : MonoBehaviour {
 
     private void UpdatePath () {
         bezierPath = new BezierPath( bodyParts, false, PathSpace.xyz );
-        vertexPath = new VertexPath( bezierPath, pathHolder.transform );
+        vertexPath = new VertexPath( bezierPath, pathHolder.transform, .1f );
 
         OnPathUpdate.Invoke( vertexPath );
     }

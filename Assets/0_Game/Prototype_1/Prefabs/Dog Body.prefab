@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 0}
-  detail: 16
+  detail: 20
   radius: 0.3
