@@ -110,7 +110,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.5
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
@@ -158,11 +158,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: ARCO SDF
+  m_Name: ARCO SDF_Outline
   m_EditorClassIdentifier: 
-  hashCode: -1300018450
+  hashCode: 2035220721
   material: {fileID: -879305092679856040}
-  materialHashCode: 138980238
+  materialHashCode: -1709579343
   m_Version: 1.1.0
   m_SourceFontFileGUID: bbb93bf05c435ee4aab30d98b7ed7318
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: bbb93bf05c435ee4aab30d98b7ed7318, type: 3}

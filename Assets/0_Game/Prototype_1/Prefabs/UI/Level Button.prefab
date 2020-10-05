@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: -40, y: -20}
+  m_SizeDelta: {x: -60, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4895584478125350407
 CanvasRenderer:
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eb1ea5f66aeff3644b9b660738e43ffd, type: 2}
-  m_sharedMaterial: {fileID: -879305092679856040, guid: eb1ea5f66aeff3644b9b660738e43ffd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 62f9ed397b30dc7458e7ab732232904c, type: 2}
+  m_sharedMaterial: {fileID: -879305092679856040, guid: 62f9ed397b30dc7458e7ab732232904c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -317,7 +317,7 @@ MonoBehaviour:
   OnKill:
     _PersistentCalls: []
   target: {fileID: 4895584479157843329}
-  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  targetScale: {x: 1.2, y: 1.2, z: 1.2}
 --- !u!1 &4895584479157843390
 GameObject:
   m_ObjectHideFlags: 0
