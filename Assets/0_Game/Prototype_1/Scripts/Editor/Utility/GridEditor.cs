@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEditor;
-using Microsoft.Unity.VisualStudio.Editor;
 using Sirenix.Utilities;
-using Sirenix.Serialization;
 
 public class GridEditor : SerializedMonoBehaviour
 {
