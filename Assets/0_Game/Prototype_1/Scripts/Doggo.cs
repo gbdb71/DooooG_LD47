@@ -200,6 +200,9 @@ public class Doggo : MonoBehaviour {
             mt.SetEase( movementEase );
             mt.onComplete += MoveEndHandler;
 
+            mt.Play();
+            rt.Play();
+
             UpdateBody();
         }
     }
@@ -208,15 +211,15 @@ public class Doggo : MonoBehaviour {
         Transform currentBP = bodyParts[1];
         Transform previousBP;
 
-        currentBP.DOMove( transform.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase );
-        currentBP.DORotateQuaternion( transform.rotation, rotationTime ).SetEase( rotationEase );
+        currentBP.DOMove( transform.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
+        currentBP.DORotateQuaternion( transform.rotation, rotationTime ).SetEase( rotationEase ).Play();
 
         for ( int i = 2; i < doggoLength; i++ ) {
             currentBP = bodyParts[i];
             previousBP = bodyParts[i - 1];
 
-            currentBP.DOMove( previousBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase );
-            currentBP.DORotateQuaternion( previousBP.rotation, rotationTime ).SetEase( rotationEase );
+            currentBP.DOMove( previousBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
+            currentBP.DORotateQuaternion( previousBP.rotation, rotationTime ).SetEase( rotationEase ).Play();
         }
     }
 
