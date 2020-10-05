@@ -46,8 +46,12 @@ public class Doggo : MonoBehaviour {
     private int bootyFollowMoves = 0;
     private VertexPath vertexPath;
     private BezierPath bezierPath;
+    private float speedOffset;
+    private float currentMoveSpeed;
 
     private void Start () {
+        currentMoveSpeed = moveSpeed;
+        speedOffset = currentMoveSpeed * .2f;
         SetupLenght.Invoke( doggoLength );
 
         CreatePathHolder();
@@ -90,7 +94,7 @@ public class Doggo : MonoBehaviour {
                 case Direction.up:
                 if ( wallForward )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, currentMoveSpeed );
                 break;
                 case Direction.down:
                 //cannot go back
@@ -98,14 +102,14 @@ public class Doggo : MonoBehaviour {
                 case Direction.right:
                 if ( wallRight )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position + Vector3.right, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
                 case Direction.left:
                 if ( wallLeft )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position - Vector3.right, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
@@ -119,19 +123,19 @@ public class Doggo : MonoBehaviour {
                 case Direction.down:
                 if ( wallForward )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, currentMoveSpeed );
                 break;
                 case Direction.right:
                 if ( wallLeft )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position + Vector3.right, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
                 case Direction.left:
                 if ( wallRight )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position - Vector3.right, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
@@ -142,21 +146,21 @@ public class Doggo : MonoBehaviour {
                 case Direction.up:
                 if ( wallLeft )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position + Vector3.forward, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
                 case Direction.down:
                 if ( wallRight )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position - Vector3.forward, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
                 case Direction.right:
                 if ( wallForward )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.right * cellSize, currentMoveSpeed );
                 break;
                 case Direction.left:
                 //cannot go back
@@ -168,14 +172,14 @@ public class Doggo : MonoBehaviour {
                 case Direction.up:
                 if ( wallRight )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( Vector3.forward * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position + Vector3.forward, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
                 case Direction.down:
                 if ( wallLeft )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.forward * cellSize, currentMoveSpeed );
                 rt = transform.DOLookAt( transform.position - Vector3.forward, rotationTime, AxisConstraint.Y );
                 currentDirection = dir;
                 break;
@@ -185,7 +189,7 @@ public class Doggo : MonoBehaviour {
                 case Direction.left:
                 if ( wallForward )
                     break;
-                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, moveSpeed );
+                mt = transform.DOBlendableLocalMoveBy( -Vector3.right * cellSize, currentMoveSpeed );
                 break;
             }
             break;
@@ -212,14 +216,14 @@ public class Doggo : MonoBehaviour {
         Transform currentBP = bodyParts[1];
         Transform previousBP;
 
-        currentBP.DOMove( transform.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
+        currentBP.DOMove( transform.position, currentMoveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
         currentBP.DORotateQuaternion( transform.rotation, rotationTime ).SetEase( rotationEase ).Play();
 
         for ( int i = 2; i < doggoLength; i++ ) {
             currentBP = bodyParts[i];
             previousBP = bodyParts[i - 1];
 
-            currentBP.DOMove( previousBP.position, moveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
+            currentBP.DOMove( previousBP.position, currentMoveSpeed ).SetSpeedBased( true ).SetEase( movementEase ).Play();
             currentBP.DORotateQuaternion( previousBP.rotation, rotationTime ).SetEase( rotationEase ).Play();
         }
     }
@@ -285,6 +289,7 @@ public class Doggo : MonoBehaviour {
         moving = false;
         bootyFollowMoves = 0;
         movementEase = Ease.OutCubic;
+        currentMoveSpeed = moveSpeed;
 
         //forward wall
         wallForward = Physics.Raycast( fr, cellSize, wallMask );
@@ -306,6 +311,7 @@ public class Doggo : MonoBehaviour {
 
     private void BootySeenSequence () {
         movementEase = Ease.Linear;
+        currentMoveSpeed = moveSpeed + speedOffset;
         if ( bootyForward ) {
             UpdateBootyFollowMoves();
             Move( currentDirection );
