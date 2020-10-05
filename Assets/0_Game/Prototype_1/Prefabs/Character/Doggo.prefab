@@ -420,7 +420,15 @@ MonoBehaviour:
   movementEase: 9
   rotationEase: 6
   OnWin:
-    _PersistentCalls: []
+    _PersistentCalls:
+    - _Target: {fileID: 11400000, guid: 69e18bf8140fbf945888806813f14371, type: 2}
+      _MethodName: Invoke
+      _PersistentArguments: []
+  OnLoss:
+    _PersistentCalls:
+    - _Target: {fileID: 11400000, guid: 24b96bee8b16a544c99d05632ebca8eb, type: 2}
+      _MethodName: Invoke
+      _PersistentArguments: []
   OnPathUpdate:
     _PersistentCalls:
     - _Target: {fileID: 0}
@@ -443,6 +451,7 @@ MonoBehaviour:
   bootyForward: 0
   bootyRight: 0
   bootyLeft: 0
+  input: {x: 0, y: 0, z: 0}
   bootyFollowMoves: 0
 --- !u!1 &2532331191578990104
 GameObject:

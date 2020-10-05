@@ -23,6 +23,7 @@ public class Doggo : MonoBehaviour {
     public Ease rotationEase;
     [Header("Events")]
     public UltEvent OnWin;
+    public UltEvent OnLoss;
     public UltEvent<VertexPath> OnPathUpdate;
 
     [Space, Space]
@@ -44,7 +45,6 @@ public class Doggo : MonoBehaviour {
     private int bootyFollowMoves = 0;
     private VertexPath vertexPath;
     private BezierPath bezierPath;
-    private Vector3[] points;
 
     private void Start () {
         CreatePathHolder();
@@ -70,8 +70,6 @@ public class Doggo : MonoBehaviour {
     }
 
     private void UpdatePath () {
-        points = new Vector3[doggoLength];
-
         bezierPath = new BezierPath( bodyParts, false, PathSpace.xyz );
         vertexPath = new VertexPath( bezierPath, pathHolder.transform );
 
@@ -292,6 +290,10 @@ public class Doggo : MonoBehaviour {
 
         //left wall
         wallLeft = Physics.Raycast( lr, cellSize, wallMask );
+
+        if ( wallForward && wallRight && wallLeft ) {
+            OnLoss.Invoke();
+        }
     }
 
     private void MoveEndHandler () {
