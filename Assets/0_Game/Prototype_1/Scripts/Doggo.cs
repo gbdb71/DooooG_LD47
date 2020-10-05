@@ -22,6 +22,7 @@ public class Doggo : MonoBehaviour {
     public Ease movementEase;
     public Ease rotationEase;
     [Header("Events")]
+    public UltEvent<int> SetupLenght;
     public UltEvent OnWin;
     public UltEvent OnLoss;
     public UltEvent<VertexPath> OnPathUpdate;
@@ -47,6 +48,8 @@ public class Doggo : MonoBehaviour {
     private BezierPath bezierPath;
 
     private void Start () {
+        SetupLenght.Invoke( doggoLength );
+
         CreatePathHolder();
 
         CreateBody();

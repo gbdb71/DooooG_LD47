@@ -419,6 +419,19 @@ MonoBehaviour:
   inputTreshold: 0.7
   movementEase: 9
   rotationEase: 6
+  SetupLenght:
+    _PersistentCalls:
+    - _Target: {fileID: 11400000, guid: 5126067357a132147ac2fa93890c462c, type: 2}
+      _MethodName: Invoke
+      _PersistentArguments:
+      - _Type: 14
+        _Int: 0
+        _String: 
+        _X: 3
+        _Y: 0
+        _Z: 0
+        _W: 0
+        _Object: {fileID: 0}
   OnWin:
     _PersistentCalls:
     - _Target: {fileID: 11400000, guid: 69e18bf8140fbf945888806813f14371, type: 2}
