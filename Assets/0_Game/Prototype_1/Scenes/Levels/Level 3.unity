@@ -3604,6 +3604,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353151475147894139, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
+      propertyPath: _dogDirection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 353151475147894139, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 353151475147894139, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
     - target: {fileID: 2950515114317405633, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
       propertyPath: m_Name
       value: Character
@@ -3664,8 +3672,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
+    - target: {fileID: 8012876955990336482, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 8012876956082860597, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
       propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8012876956082860597, guid: 750d27b3b31883249bae13a2faddd34e, type: 3}
+      propertyPath: m_LocalRotation.y
       value: 0.7071068
       objectReference: {fileID: 0}
     m_RemovedComponents: []

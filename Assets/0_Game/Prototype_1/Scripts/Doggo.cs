@@ -35,6 +35,8 @@ public class Doggo : MonoBehaviour {
     [SerializeField] private bool bootyForward, bootyRight, bootyLeft;
 
     private GameObject pathHolder;
+    [SerializeField]
+    [ReadOnly]
     private Vector3 input;
     private List<Transform> bodyParts = new List<Transform>();
     [SerializeField]
