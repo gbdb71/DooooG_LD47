@@ -281,6 +281,7 @@ public class Doggo : MonoBehaviour {
         //not moving anymore
         moving = false;
         bootyFollowMoves = 0;
+        movementEase = Ease.OutCubic;
 
         //forward wall
         wallForward = Physics.Raycast( fr, cellSize, wallMask );
@@ -301,6 +302,7 @@ public class Doggo : MonoBehaviour {
     }
 
     private void BootySeenSequence () {
+        movementEase = Ease.Linear;
         if ( bootyForward ) {
             UpdateBootyFollowMoves();
             Move( currentDirection );
